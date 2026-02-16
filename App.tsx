@@ -105,7 +105,7 @@ const App: React.FC = () => {
               LEGO <span className="text-red-600">PartMaster</span>
             </h1>
             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest border-l-4 border-yellow-400 pl-3 mt-2">
-              System Inwentaryzacji Klocków v2.6.4 Build OK
+              System Inwentaryzacji Klocków v2.6.5 Final
             </p>
           </section>
 
