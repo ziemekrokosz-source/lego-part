@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Layout } from './components/Layout.tsx';
-import { SetSearch } from './components/SetSearch.tsx';
-import { SetCard } from './components/SetCard.tsx';
-import { SetDetail } from './components/SetDetail.tsx';
-import { fetchLegoSetData } from './services/geminiService.ts';
-import { AppState } from './types.ts';
+import { Layout } from './components/Layout';
+import { SetSearch } from './components/SetSearch';
+import { SetCard } from './components/SetCard';
+import { SetDetail } from './components/SetDetail';
+import { fetchLegoSetData } from './services/geminiService';
+import { AppState } from './types';
 
 const App: React.FC = () => {
   const [state, setState] = useState<AppState>(() => {
@@ -44,7 +44,7 @@ const App: React.FC = () => {
       setState(prev => ({ 
         ...prev, 
         isSearching: false, 
-        error: "BŁĄD: Nie znaleziono zestawu lub błąd połączenia." 
+        error: "BŁĄD: Nie znaleziono zestawu lub problem z kluczem API." 
       }));
     }
   };
@@ -75,7 +75,7 @@ const App: React.FC = () => {
   }, []);
 
   const deleteSet = (setId: string) => {
-    if (confirm('USUNĄĆ ZESTAW?')) {
+    if (confirm('USUNĄĆ ZESTAW Z INWENTARZA?')) {
       setState(prev => ({
         ...prev,
         sets: prev.sets.filter(s => s.id !== setId),
@@ -89,20 +89,23 @@ const App: React.FC = () => {
   return (
     <Layout>
       {state.error && (
-        <div className="mb-6 bg-red-600 border-4 border-black text-white px-4 py-2 font-black uppercase flex items-center justify-between hard-shadow">
-          <p className="text-xs">{state.error}</p>
-          <button onClick={() => setState(p => ({ ...p, error: null }))} className="font-black text-xl">&times;</button>
+        <div className="mb-6 bg-red-600 border-4 border-black text-white px-4 py-3 font-black uppercase flex items-center justify-between hard-shadow animate-bounce">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl">⚠️</span>
+            <p className="text-xs">{state.error}</p>
+          </div>
+          <button onClick={() => setState(p => ({ ...p, error: null }))} className="font-black text-2xl hover:scale-125 transition-transform">&times;</button>
         </div>
       )}
 
       {!activeSet ? (
         <>
           <section className="mb-10">
-            <h1 className="text-3xl font-black uppercase tracking-tighter text-black">
+            <h1 className="text-4xl font-black uppercase tracking-tighter text-black">
               LEGO <span className="text-red-600">PartMaster</span>
             </h1>
             <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest border-l-4 border-yellow-400 pl-3 mt-2">
-              System Inwentaryzacji Klocków v2.0
+              System Inwentaryzacji Klocków v2.6.2 Professional
             </p>
           </section>
 
@@ -110,7 +113,10 @@ const App: React.FC = () => {
 
           {state.sets.length > 0 && (
             <div className="mt-12">
-              <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 border-b-2 border-slate-300 pb-2">Moja Kolekcja</h2>
+              <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 border-b-2 border-slate-300 pb-2 flex justify-between">
+                <span>Moja Kolekcja ({state.sets.length})</span>
+                <span>Ostatnia synchronizacja: {new Date().toLocaleTimeString()}</span>
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {state.sets.map(set => (
                   <SetCard 
@@ -121,6 +127,13 @@ const App: React.FC = () => {
                   />
                 ))}
               </div>
+            </div>
+          )}
+          
+          {state.sets.length === 0 && !state.isSearching && (
+            <div className="mt-20 text-center border-4 border-dashed border-slate-400 p-12">
+              <p className="text-slate-400 font-black uppercase tracking-widest">Twój inwentarz jest pusty</p>
+              <p className="text-[10px] text-slate-400 uppercase mt-2">Wpisz numer zestawu powyżej, aby zacząć kompletowanie</p>
             </div>
           )}
         </>
