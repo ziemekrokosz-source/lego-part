@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Layout } from './components/Layout';
+import { Layout } from './Layout';
 import { SetSearch } from './components/SetSearch';
 import { SetCard } from './components/SetCard';
 import { SetDetail } from './components/SetDetail';
