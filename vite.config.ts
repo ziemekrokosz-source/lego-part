@@ -4,10 +4,13 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
-    // Pozwala na używanie process.env.API_KEY bezpośrednio w kodzie, 
-    // co jest wymagane przez instrukcję obsługi SDK.
+    // Kluczowe dla działania SDK Gemini w przeglądarce
     'process.env': {
       API_KEY: JSON.stringify(process.env.API_KEY)
     }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false
   }
 });
