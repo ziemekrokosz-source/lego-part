@@ -1,0 +1,5 @@
+{
+  "name": "Lego Part Master",
+  "description": "A sophisticated LEGO set completion tracker that uses AI to fetch part lists and helps you manage your brick collection with precision.",
+  "requestFramePermissions": []
+}

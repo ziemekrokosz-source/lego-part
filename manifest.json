@@ -1,0 +1,17 @@
+{
+  "name": "Lego Part Master",
+  "short_name": "LegoPartMaster",
+  "description": "Profesjonalny system inwentaryzacji klocków LEGO.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#d1d5db",
+  "theme_color": "#fbbf24",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/931/931934.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
